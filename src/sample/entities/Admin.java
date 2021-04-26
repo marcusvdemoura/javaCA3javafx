@@ -1,0 +1,388 @@
+package sample.entities;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+public class Admin extends Person {
+
+    private Student student;
+    private Lecturer lecturer;
+    private CollegeBranch collegeBranch;
+    private Module module;
+    private Course course;
+    private String courseYear;
+    private ArrayList<CollegeBranch> listOfBranches = new ArrayList<>();
+
+
+    final static String URL = "jdbc:mysql://127.0.0.1:3306/collegeManagementSystem?autoReconnect=true&useSSL=false";
+    final static String DB_USER = "root";
+    final static String DB_PASSWORD = "M@rcus2020";
+
+    private PreparedStatement createBranchQuery;
+    private PreparedStatement deleteBranchQuery;
+    private PreparedStatement createStudentQuery;
+    private PreparedStatement deleteStudentQuery;
+    private PreparedStatement createLecturerQuery;
+    private PreparedStatement deleteLecturerQuery;
+    private PreparedStatement createAdminQuery;
+    private PreparedStatement createModuleQuery;
+    private PreparedStatement deleteModuleQuery;
+    private PreparedStatement createCourseQuery;
+    private PreparedStatement deleteCourseQuery;
+    private PreparedStatement addStudentModuleQuery;
+    private PreparedStatement createCourseYear;
+
+
+    private Connection con = DriverManager.getConnection(URL, DB_USER, DB_PASSWORD);
+
+
+
+    public Admin(String first_name, String last_name, String gender, String phone, String dob, String emailAddress, String adminId, String password) throws SQLException {
+        super(first_name, last_name, gender, phone, dob, emailAddress, adminId, password);
+    }
+
+    public Admin(String first_name, String last_name) throws SQLException {
+        super(first_name, last_name);
+    }
+
+
+
+
+    // CREATING BRANCHES, LECTURERS AND STUDENTS AND NEW ADMIN
+
+    public void createAdmin(String first_name, String last_name, String gender, String phone, String dob,
+                            String emailAddress, String adminId, String password) throws ClassNotFoundException, SQLException {
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "INSERT INTO admin(firstName, lastName, gender, phoneNumber, dob, emailAddress, adminID," +
+                " password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        createAdminQuery = con.prepareStatement(sql);
+
+        createAdminQuery.setString(1, first_name);
+        createAdminQuery.setString(2,last_name);
+        createAdminQuery.setString(3, gender);
+        createAdminQuery.setString(4, phone);
+        createAdminQuery.setString(5,dob);
+        createAdminQuery.setString(6, emailAddress);
+        createAdminQuery.setString(7, adminId);
+        createAdminQuery.setString(8, password);
+
+
+        createAdminQuery.execute();
+
+    }
+
+    public void createBranch(String unit, String address) throws ClassNotFoundException, SQLException {
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "INSERT INTO collegeBranches(unit, address) VALUES (?, ?)";
+        createBranchQuery = con.prepareStatement(sql);
+
+        createBranchQuery.setString(1, unit);
+        createBranchQuery.setString(2, address);
+
+        createBranchQuery.execute();
+
+
+    }
+
+    public void createLecturer(String first_name, String last_name, String gender, String phone, String dob, String emailAddress,
+                               String lecturerId, String password) throws Exception {
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "INSERT INTO lecturer(firstName, lastName, gender, phone, dob, emailAddress, idlecturer," +
+                " password) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        createLecturerQuery = con.prepareStatement(sql);
+
+        createLecturerQuery.setString(1, first_name);
+        createLecturerQuery.setString(2,last_name);
+        createLecturerQuery.setString(3, gender);
+        createLecturerQuery.setString(4, phone);
+        createLecturerQuery.setString(5,dob);
+        createLecturerQuery.setString(6, emailAddress);
+        createLecturerQuery.setString(7, lecturerId);
+        createLecturerQuery.setString(8, password);
+
+
+        createLecturerQuery.execute();
+    }
+
+
+    public void createStudents(String first_name, String last_name, String gender, String phone, String dob,
+                               String emailAddress, String studentId, String password, String collegeBranchName, String courseName, int courseYear,
+                               boolean isPaidFull) throws ClassNotFoundException, SQLException {
+
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "INSERT INTO student(firstName, lastName, gender, phone, dob, emailAddress, idstudent," +
+                " password, collegeBranch, course, isPaidFull, courseYear) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+
+
+        createStudentQuery = con.prepareStatement(sql);
+
+        createStudentQuery.setString(1, first_name);
+        createStudentQuery.setString(2,last_name);
+        createStudentQuery.setString(3, gender);
+        createStudentQuery.setString(4, phone);
+        createStudentQuery.setString(5,dob);
+        createStudentQuery.setString(6, emailAddress);
+        createStudentQuery.setString(7, studentId);
+        createStudentQuery.setString(8, password);
+        createStudentQuery.setString(9, collegeBranchName);
+        createStudentQuery.setString(10, courseName);
+        createStudentQuery.setBoolean(11, isPaidFull);
+        createStudentQuery.setInt(12, courseYear);
+
+
+
+        createStudentQuery.execute();
+
+    }
+
+
+    // DELETING COURSES LECTURERS AND STUDENTS
+
+    public void deleteStudent(String studentID) throws ClassNotFoundException, SQLException {
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "DELETE from student WHERE idstudent = '"+studentID+"'";
+
+        deleteStudentQuery = con.prepareStatement(sql);
+
+
+        deleteStudentQuery.execute();
+
+
+    }
+
+    public void deleteCourse(String collegeBranchUnit, String courseName) throws ClassNotFoundException, SQLException {
+
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "DELETE from course WHERE collegeBranchUnit = '"+collegeBranchUnit+"' AND name = '" + courseName + "'";
+
+        deleteCourseQuery = con.prepareStatement(sql);
+
+
+        deleteCourseQuery.execute();
+
+
+
+    }
+
+    public void deleteModule(String subject) throws ClassNotFoundException, SQLException {
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "DELETE from module WHERE subject = '" + subject + "'";
+
+        deleteModuleQuery = con.prepareStatement(sql);
+
+
+        deleteModuleQuery.execute();
+
+    }
+
+    public void deleteLecturer(String lecturerId) throws ClassNotFoundException, SQLException {
+
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        // this is givin an error
+
+        String sql = "DELETE from lecturer WHERE idlecturer = '"+lecturerId+"'";
+
+        deleteLecturerQuery = con.prepareStatement(sql);
+
+
+        deleteLecturerQuery.execute();
+
+
+
+    }
+
+    // DELETING BRANCHES
+
+    public void deleteBranch(String branchUnit) throws ClassNotFoundException, SQLException {
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "DELETE FROM collegeBranches WHERE unit = ?";
+        deleteBranchQuery = con.prepareStatement(sql);
+
+        deleteBranchQuery.setString(1, branchUnit);
+
+        deleteBranchQuery.execute();
+
+
+    }
+
+    // CREATING MODULES AND COURSES - ADDING STUDENTS TO MODULES
+    public void createModule(String moduleName, String courseName, String collegeBranchUnit, String weekDay, String classHour, String lecturerId) throws ClassNotFoundException, SQLException {
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "INSERT INTO module(subject, course, collegeBranch, weekDay, classHour, idlecturer) VALUES (?, ?, ?, ?, ?, ?)";
+
+        createModuleQuery = con.prepareStatement(sql);
+
+        createModuleQuery.setString(1, moduleName);
+        createModuleQuery.setString(2, courseName);
+        createModuleQuery.setString(3, collegeBranchUnit);
+        createModuleQuery.setString(4, weekDay);
+        createModuleQuery.setString(5, classHour);
+        createModuleQuery.setString(6, lecturerId);
+
+        createModuleQuery.execute();
+
+
+    }
+
+    public void createCourse(String collegeBranchUnit, String name, Double price) throws ClassNotFoundException, SQLException {
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "INSERT INTO course(collegeBranchUnit, name, price) VALUES (?, ?, ?)";
+
+        createCourseQuery = con.prepareStatement(sql);
+
+        createCourseQuery.setString(1, collegeBranchUnit);
+        createCourseQuery.setString(2, name);
+        createCourseQuery.setDouble(3, price);
+
+        createCourseQuery.execute();
+
+
+
+    }
+
+    public void addStudentToModule(String studentId, String moduleSubject) throws Exception {
+
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "INSERT INTO studentInModule(idStudent, moduleName) VALUES (?, ?)";
+
+        addStudentModuleQuery = con.prepareStatement(sql);
+
+        addStudentModuleQuery.setString(1, studentId);
+        addStudentModuleQuery.setString(2, moduleSubject);
+
+
+        addStudentModuleQuery.execute();
+
+
+
+    }
+
+
+    // to create course year
+
+    public void createCourseYear(String year, String courseName, String moduleName) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.jdbc.Driver");
+        String sql = "INSERT INTO courseYear(year, course, moduleName) VALUES (?, ?, ?)";
+        createCourseYear = con.prepareStatement(sql);
+
+        createCourseYear.setString(1, year);
+        createCourseYear.setString(2, courseName);
+        createCourseYear.setString(3, moduleName);
+
+        createCourseYear.execute();
+
+    }
+
+
+    // GETTING AND PRINTING LIST OF BRANCHES
+
+    public ArrayList<CollegeBranch> getListOfBranches() {
+        return listOfBranches;
+    }
+
+    public void printListOfBranches(){
+        for (CollegeBranch cb : getListOfBranches()){
+            System.out.println("Branch " + cb.getUnit() + "\nLocated at: " + cb.getAddress());
+        }
+    }
+
+
+    // DELETING STUDENTS, LECTURERES AND BRANCHES
+
+    public void deleteStudent(String studentID, CollegeBranch cb){
+
+        int counting = 0;
+
+        for (int i = 0; i < collegeBranch.getListOfStudents().size(); i++){
+            counting++;
+            if (collegeBranch.getListOfStudents().get(i).getId().equalsIgnoreCase(studentID)){
+                collegeBranch.getListOfStudents().remove(i);
+                System.out.println("Student removed");
+                break;
+            }
+        }
+
+        if (counting == collegeBranch.getListOfStudents().size()){
+            System.out.println("This student does not exist in this branch!!!");
+        }
+
+    }
+
+
+
+
+    // Add payment to student
+    public void addPayment(Student s){
+
+        int count = 0;
+
+        for (int i = 0; i< s.getFees().size(); i++){
+            count++;
+            if (s.getFees().get(i) !=0.0){
+                s.getFees().set(i, 0.0);
+                break;
+            }
+
+        }
+        if (count == s.getFees().size()){
+            System.out.println("THE FEES ARE ALL PAID. NO NEED TO ADD EXTRA PAYMENT!!!");
+        }
+
+    }
+
+
+
+    // Set fees installments
+
+    public void setInstallments(Integer installments, String studentId) throws ClassNotFoundException, SQLException {
+
+        PreparedStatement setInstall;
+
+        Class.forName("com.mysql.jdbc.Driver");
+        String sql = "UPDATE student SET numberOfInstallments = ? WHERE idstudent = ?";
+        setInstall = con.prepareStatement(sql);
+
+        setInstall.setInt(1, installments);
+        setInstall.setString(2, studentId);
+
+
+        setInstall.execute();
+
+    }
+
+
+    public String getCourseYear() {
+        return courseYear;
+    }
+
+    public void setCourseYear(String courseYear) {
+        this.courseYear = courseYear;
+    }
+}

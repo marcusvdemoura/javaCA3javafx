@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.MainPageStudent">
+   <children>
+      <ImageView fitHeight="533.0" fitWidth="800.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@images/main.jpeg" />
+         </image>
+      </ImageView>
+      <TabPane prefHeight="533.0" prefWidth="800.0" tabClosingPolicy="UNAVAILABLE">
+        <tabs>
+          <Tab text="Assignment">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="35.0" layoutY="6.0" text="Student Name" />
+                        <Label layoutX="35.0" layoutY="39.0" text="Module" />
+                        <ComboBox layoutX="127.0" layoutY="36.0" prefHeight="25.0" prefWidth="150.0" />
+                        <Button layoutX="251.0" layoutY="339.0" mnemonicParsing="false" text="Quit" />
+                        <ListView layoutX="364.0" layoutY="64.0" prefHeight="259.0" prefWidth="399.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+          <Tab text="Grades">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="35.0" layoutY="39.0" text="Module" />
+                        <ComboBox layoutX="127.0" layoutY="36.0" prefWidth="150.0" />
+                        <Button layoutX="251.0" layoutY="339.0" mnemonicParsing="false" text="Quit" />
+                        <ListView layoutX="364.0" layoutY="64.0" prefHeight="259.0" prefWidth="399.0" />
+                     </children>
+                  </AnchorPane>
+            </content>
+          </Tab>
+            <Tab text="Exams">
+               <content>
+                  <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="35.0" layoutY="39.0" text="Module" />
+                        <ComboBox layoutX="127.0" layoutY="36.0" prefWidth="150.0" />
+                        <Button layoutX="251.0" layoutY="339.0" mnemonicParsing="false" text="Quit" />
+                        <ListView layoutX="364.0" layoutY="64.0" prefHeight="259.0" prefWidth="399.0" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
+        </tabs>
+      </TabPane>
+   </children>
+</AnchorPane>

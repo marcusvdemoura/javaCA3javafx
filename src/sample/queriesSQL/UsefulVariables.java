@@ -36,6 +36,26 @@ public class UsefulVariables {
 
     public PreparedStatement createModuleGetCourses;
 
+    public PreparedStatement getAllStudents;
+
+    public PreparedStatement getAllLecturers;
+
+    public PreparedStatement getAllCourses;
+
+    public PreparedStatement getAllBranches;
+
+    public PreparedStatement getAllModules;
+
+    public PreparedStatement getAllCourseYear;
+
+    public PreparedStatement getPayments;
+
+    public PreparedStatement addPaymentQuery;
+
+
+
+
+
 
 
 

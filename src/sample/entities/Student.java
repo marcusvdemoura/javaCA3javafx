@@ -20,18 +20,12 @@ public class Student extends Person{
 
 
     public Student(String firstName, String lastName, String gender, String phone, String dob,
-                   String emailAddress, String id, String password, String collegeBranchName, String courseName, boolean isPaidFull, String courseYear) {
+                   String emailAddress, String id, String password, String collegeBranchName,
+                   String courseName, boolean isPaidFull, String courseYear) {
         super(firstName, lastName, gender, phone, dob, emailAddress, id, password);
         this.collegeBranch = collegeBranch;
-        this.course = course;
         this.isPaidFull = isPaidFull;
         this.courseYear = courseYear;
-    }
-
-    public Student(String first_name, String last_name) {
-        super(first_name, last_name);
-
-
     }
 
     public ArrayList<Assignment> getListOfAssignments() {

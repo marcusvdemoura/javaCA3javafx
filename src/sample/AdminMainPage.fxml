@@ -4,7 +4,6 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -44,7 +43,7 @@
                                 <TextField fx:id="studentEmailInsert" layoutX="110.0" layoutY="193.0" />
                                 <TextField fx:id="studentPasswordInsert" layoutX="110.0" layoutY="224.0" />
                                 <Button fx:id="saveButtonStudent" layoutX="14.0" layoutY="381.0" mnemonicParsing="false" onAction="#toCreateStudent" text="Save" />
-                                <Button layoutX="76.0" layoutY="381.0" mnemonicParsing="false" text="Upadate" />
+                                <Button layoutX="76.0" layoutY="381.0" mnemonicParsing="false" onAction="#toEditStudent" text="Update" />
                                 <Button layoutX="155.0" layoutY="381.0" mnemonicParsing="false" onAction="#toDeleteStudent" text="Delete" />
                                 <Button layoutX="225.0" layoutY="381.0" mnemonicParsing="false" onAction="#toClearInputs" text="Clear" />
                                 <DatePicker fx:id="studentdobInsert" layoutX="110.0" layoutY="161.0" prefHeight="25.0" prefWidth="160.0" />
@@ -55,14 +54,14 @@
                         <ChoiceBox fx:id="studentInCourse" layoutX="111.0" layoutY="286.0" prefWidth="150.0" />
                         <ChoiceBox fx:id="studentIsPaid" layoutX="111.0" layoutY="344.0" prefWidth="150.0" />
                         <ChoiceBox fx:id="addStudentCourseYear" layoutX="111.0" layoutY="314.0" prefWidth="150.0" />
-                        <TableView fx:id="studentTableView" layoutX="286.0" layoutY="5.0" prefHeight="395.0" prefWidth="507.0">
+                        <TableView fx:id="studentTableView" layoutX="286.0" layoutY="5.0" onMouseClicked="#getSelectedStudent" prefHeight="395.0" prefWidth="507.0">
                           <columns>
-                            <TableColumn prefWidth="101.0" text="StudentID" />
-                            <TableColumn prefWidth="85.0" text="FirstName" />
-                              <TableColumn prefWidth="85.0" text="LastName" />
-                              <TableColumn prefWidth="62.0" text="Branch" />
-                              <TableColumn prefWidth="81.0" text="Course" />
-                              <TableColumn prefWidth="112.0" text="Year" />
+                            <TableColumn fx:id="col_studentid" prefWidth="101.0" text="StudentID" />
+                            <TableColumn fx:id="col_studentFirstName" prefWidth="85.0" text="FirstName" />
+                              <TableColumn fx:id="col_studentLastName" prefWidth="85.0" text="LastName" />
+                              <TableColumn fx:id="col_studentBranch" prefWidth="62.0" text="Branch" />
+                              <TableColumn fx:id="col_studentCourse" prefWidth="81.0" text="Course" />
+                              <TableColumn fx:id="col_studentYear" prefWidth="112.0" text="Year" />
                           </columns>
                         </TableView>
                             </children>
@@ -88,18 +87,18 @@
                                 <TextField fx:id="lecturerEmail" layoutX="110.0" layoutY="212.0" />
                                 <TextField fx:id="lecturerpassword" layoutX="110.0" layoutY="243.0" />
                                 <Button fx:id="saveNewLecturerBtn" layoutX="14.0" layoutY="339.0" mnemonicParsing="false" onAction="#toCreateLecturer" text="Save" />
-                                <Button layoutX="76.0" layoutY="339.0" mnemonicParsing="false" text="Upadate" />
+                                <Button layoutX="76.0" layoutY="339.0" mnemonicParsing="false" onAction="#toEditLecturer" text="Update" />
                                 <Button layoutX="155.0" layoutY="339.0" mnemonicParsing="false" onAction="#toDeleteLecturer" text="Delete" />
                                 <Button layoutX="225.0" layoutY="339.0" mnemonicParsing="false" onAction="#toClearInputs" text="Clear" />
                                 <DatePicker fx:id="lecturerbirth" layoutX="110.0" layoutY="180.0" prefHeight="25.0" prefWidth="160.0" />
                         <ChoiceBox fx:id="genderLecturer" layoutX="112.0" layoutY="118.0" prefHeight="24.0" prefWidth="168.0" />
-                        <TableView fx:id="lecturerTableView" layoutX="300.0" layoutY="18.0" prefHeight="360.0" prefWidth="482.0">
+                        <TableView fx:id="lecturerTableView" layoutX="300.0" layoutY="18.0" onMouseClicked="#getSelectedLecturer" prefHeight="360.0" prefWidth="482.0">
                           <columns>
-                            <TableColumn prefWidth="100.0" text="LecturerID" />
-                            <TableColumn prefWidth="92.0" text="FirstName" />
-                              <TableColumn prefWidth="96.0" text="LastName" />
-                              <TableColumn prefWidth="83.0" text="Gender" />
-                              <TableColumn prefWidth="110.0" text="Phone" />
+                            <TableColumn fx:id="col_lecturerid" prefWidth="100.0" text="LecturerID" />
+                            <TableColumn fx:id="col_lecturerFirstName" prefWidth="92.0" text="FirstName" />
+                              <TableColumn fx:id="col_lecturerLastName" prefWidth="96.0" text="LastName" />
+                              <TableColumn fx:id="col_lecturerGender" prefWidth="83.0" text="Gender" />
+                              <TableColumn fx:id="col_lecturerPhone" prefWidth="110.0" text="Phone" />
                           </columns>
                         </TableView>
                             </children>
@@ -115,13 +114,13 @@
                                 <TextField fx:id="branchUnitInsert" layoutX="131.0" layoutY="26.0" />
                                 <TextField fx:id="branchAddressInsert" layoutX="131.0" layoutY="57.0" />
                                 <Button fx:id="saveNewBranchBtn" layoutX="35.0" layoutY="339.0" mnemonicParsing="false" onAction="#toCreateCollegeBranch" text="Save" />
-                                <Button fx:id="updateBranchBtn" layoutX="97.0" layoutY="339.0" mnemonicParsing="false" text="Update" />
+                                <Button fx:id="updateBranchBtn" layoutX="97.0" layoutY="339.0" mnemonicParsing="false" onAction="#toEditCollegeBranch" text="Update" />
                                 <Button fx:id="deleteBranchBtn" layoutX="176.0" layoutY="339.0" mnemonicParsing="false" onAction="#toDeleteBranch" text="Delete" />
                                 <Button fx:id="clearBranchBtn" layoutX="246.0" layoutY="339.0" mnemonicParsing="false" onAction="#toClearInputs" text="Clear" />
-                        <TableView fx:id="collegeBranchTableView" layoutX="394.0" layoutY="29.0" prefHeight="366.0" prefWidth="375.0">
+                        <TableView fx:id="collegeBranchTableView" layoutX="394.0" layoutY="29.0" onMouseClicked="#getSelectedBranch" prefHeight="366.0" prefWidth="375.0">
                           <columns>
-                            <TableColumn prefWidth="75.0" text="Unit" />
-                            <TableColumn prefWidth="299.0" text="Address" />
+                            <TableColumn fx:id="col_createbranchUnit" prefWidth="75.0" text="Unit" />
+                            <TableColumn fx:id="col_createbranchAddress" prefWidth="299.0" text="Address" />
                           </columns>
                         </TableView>
                             </children>
@@ -136,17 +135,17 @@
                                 <Label layoutX="35.0" layoutY="63.0" text="Course Name" textFill="WHITE" />
                                 <TextField fx:id="courseNameInput" layoutX="131.0" layoutY="57.0" />
                                 <Button fx:id="saveCourseBtn" layoutX="35.0" layoutY="339.0" mnemonicParsing="false" onAction="#toCreateCourse" text="Save" />
-                                <Button layoutX="97.0" layoutY="339.0" mnemonicParsing="false" text="Update" />
+                                <Button layoutX="97.0" layoutY="339.0" mnemonicParsing="false" onAction="#toEditCourse" text="Update" />
                                 <Button layoutX="176.0" layoutY="339.0" mnemonicParsing="false" onAction="#toDeleteCourse" text="Delete" />
                                 <Button layoutX="246.0" layoutY="339.0" mnemonicParsing="false" onAction="#toClearInputs" text="Clear" />
                                 <Label layoutX="35.0" layoutY="96.0" text="Price" textFill="WHITE" />
                                 <TextField fx:id="coursePrice" layoutX="131.0" layoutY="89.0" prefHeight="25.0" prefWidth="97.0" />
                         <ChoiceBox fx:id="createCourseBranchChoice" layoutX="130.0" layoutY="25.0" onDragDetected="#toCreateCourse" prefHeight="24.0" prefWidth="170.0" />
-                        <TableView fx:id="courseTableVIew" layoutX="317.0" layoutY="25.0" prefHeight="338.0" prefWidth="307.0">
+                        <TableView fx:id="courseTableVIew" layoutX="326.0" layoutY="19.0" onMouseClicked="#getSelectedCourse" prefHeight="344.0" prefWidth="374.0">
                           <columns>
-                            <TableColumn prefWidth="127.0" text="Course" />
-                            <TableColumn prefWidth="78.0" text="Branch" />
-                              <TableColumn prefWidth="101.0" text="Price" />
+                            <TableColumn fx:id="col_createCourseName" prefWidth="202.0" text="Course" />
+                            <TableColumn fx:id="col_createCourseBranch" prefWidth="71.0" text="Branch" />
+                              <TableColumn fx:id="col_createCoursePrice" prefWidth="100.0" text="Price" />
                           </columns>
                         </TableView>
                             </children>
@@ -157,23 +156,31 @@
                     <content>
                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="533.0" prefWidth="800.0">
                             <children>
-                                <Label layoutX="35.0" layoutY="29.0" text="Branch" textFill="WHITE" />
-                                <Label layoutX="35.0" layoutY="63.0" text="Course Name" textFill="WHITE" />
-                                <Button layoutX="34.0" layoutY="309.0" mnemonicParsing="false" onAction="#toCreateModule" text="Save" />
-                                <Button layoutX="96.0" layoutY="309.0" mnemonicParsing="false" text="Upadate" />
-                                <Button layoutX="175.0" layoutY="309.0" mnemonicParsing="false" onAction="#toDeleteModules" text="Delete" />
-                                <Button layoutX="245.0" layoutY="309.0" mnemonicParsing="false" onAction="#toClearInputs" text="Clear" />
-                                <ListView fx:id="listViewModule" layoutX="317.0" layoutY="26.0" prefHeight="337.0" prefWidth="465.0" />
-                                <Label layoutX="35.0" layoutY="95.0" text="Lecturer" textFill="WHITE" />
-                                <Label layoutX="35.0" layoutY="128.0" text="Module Name" textFill="WHITE" />
-                                <Label layoutX="34.0" layoutY="159.0" prefWidth="77.0" text="Week Day" textFill="WHITE" />
-                                <Label layoutX="35.0" layoutY="191.0" text="Class Hour" textFill="WHITE" />
-                                <TextField fx:id="createModuleName" layoutX="132.0" layoutY="122.0" prefHeight="25.0" prefWidth="159.0" />
-                                <TextField fx:id="createModuleAddHour" layoutX="132.0" layoutY="186.0" prefHeight="24.0" prefWidth="158.0" />
-                        <ChoiceBox fx:id="createModuleAddBranch" layoutX="132.0" layoutY="25.0" prefHeight="24.0" prefWidth="160.0" />
-                        <ChoiceBox fx:id="ModuleInCourse" layoutX="132.0" layoutY="59.0" prefHeight="24.0" prefWidth="159.0" />
-                        <ChoiceBox fx:id="createModuleAddLecturer" layoutX="132.0" layoutY="91.0" prefHeight="24.0" prefWidth="160.0" />
-                        <ChoiceBox fx:id="createModuleAddWeekDay" layoutX="132.0" layoutY="155.0" prefHeight="24.0" prefWidth="159.0" />
+                                <Label layoutX="15.0" layoutY="49.0" text="Branch" textFill="WHITE" />
+                                <Label layoutX="15.0" layoutY="83.0" text="Course Name" textFill="WHITE" />
+                                <Button layoutX="14.0" layoutY="329.0" mnemonicParsing="false" onAction="#toCreateModule" text="Save" />
+                                <Button layoutX="76.0" layoutY="329.0" mnemonicParsing="false" onAction="#toEditModule" text="Update" />
+                                <Button layoutX="155.0" layoutY="329.0" mnemonicParsing="false" onAction="#toDeleteModules" text="Delete" />
+                                <Button layoutX="225.0" layoutY="329.0" mnemonicParsing="false" onAction="#toClearInputs" text="Clear" />
+                                <Label layoutX="15.0" layoutY="115.0" text="Lecturer" textFill="WHITE" />
+                                <Label layoutX="15.0" layoutY="148.0" text="Module Name" textFill="WHITE" />
+                                <Label layoutX="14.0" layoutY="179.0" prefWidth="77.0" text="Week Day" textFill="WHITE" />
+                                <Label layoutX="15.0" layoutY="211.0" text="Class Hour" textFill="WHITE" />
+                                <TextField fx:id="createModuleName" layoutX="112.0" layoutY="142.0" prefHeight="25.0" prefWidth="159.0" />
+                                <TextField fx:id="createModuleAddHour" layoutX="112.0" layoutY="206.0" prefHeight="24.0" prefWidth="158.0" />
+                        <ChoiceBox fx:id="createModuleAddBranch" layoutX="112.0" layoutY="45.0" prefHeight="24.0" prefWidth="160.0" />
+                        <ChoiceBox fx:id="ModuleInCourse" layoutX="112.0" layoutY="79.0" prefHeight="24.0" prefWidth="159.0" />
+                        <ChoiceBox fx:id="createModuleAddLecturer" layoutX="112.0" layoutY="111.0" prefHeight="24.0" prefWidth="160.0" />
+                        <ChoiceBox fx:id="createModuleAddWeekDay" layoutX="112.0" layoutY="175.0" prefHeight="24.0" prefWidth="159.0" />
+                        <TableView fx:id="moduleTableView" layoutX="282.0" layoutY="10.0" onMouseClicked="#getSelectedModule" prefHeight="360.0" prefWidth="510.0">
+                          <columns>
+                            <TableColumn fx:id="col_CreateModuleName" prefWidth="125.0" text="Module" />
+                            <TableColumn fx:id="col_createModuleCourse" prefWidth="113.0" text="Couse" />
+                              <TableColumn fx:id="col_createModuleLecturerid" prefWidth="102.0" text="LecturerID" />
+                              <TableColumn fx:id="col_createModuleWeekday" prefWidth="104.0" text="WeekDay" />
+                              <TableColumn fx:id="col_createModuleHour" prefWidth="64.0" text="Hour" />
+                          </columns>
+                        </TableView>
                             </children>
                         </AnchorPane>
                     </content>
@@ -182,18 +189,43 @@
               <content>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <ListView fx:id="listViewCourseYear" layoutX="399.0" layoutY="9.0" prefHeight="376.0" prefWidth="387.0" />
-                        <Label fx:id="courseYearName" layoutX="67.0" layoutY="51.0" prefHeight="30.0" prefWidth="76.0" text="Course: " textFill="WHITE" />
-                        <Label fx:id="courseYear" layoutX="69.0" layoutY="101.0" text="Year: " textFill="WHITE" />
-                        <Label fx:id="moduleSubject" layoutX="67.0" layoutY="144.0" text="Module:" textFill="WHITE" />
-                        <TextField fx:id="courseYearInput" layoutX="158.0" layoutY="97.0" />
-                        <Button fx:id="courseYearSaveBtn" layoutX="67.0" layoutY="266.0" mnemonicParsing="false" onAction="#toCreateCourseYear" text="SAVE" />
-                        <Button layoutX="141.0" layoutY="266.0" mnemonicParsing="false" text="UPDATE" />
-                        <ChoiceBox fx:id="courseYearNameInput" layoutX="156.0" layoutY="54.0" prefHeight="24.0" prefWidth="172.0" />
-                        <ChoiceBox fx:id="courseYearModuleInput" layoutX="158.0" layoutY="140.0" prefHeight="24.0" prefWidth="174.0" />
-                        <Button layoutX="229.0" layoutY="266.0" mnemonicParsing="false" onAction="#toClearInputs" text="CLEAR" />
-                        <Label fx:id="courseYearBranch" layoutX="69.0" layoutY="14.0" prefHeight="30.0" prefWidth="76.0" text="Branch:" textFill="WHITE" />
-                        <ChoiceBox fx:id="courseYearBranchInput" layoutX="158.0" layoutY="17.0" prefHeight="24.0" prefWidth="172.0" />
+                        <Label fx:id="courseYearName" layoutX="24.0" layoutY="86.0" prefHeight="30.0" prefWidth="76.0" text="Course: " textFill="WHITE" />
+                        <Label fx:id="courseYear" layoutX="26.0" layoutY="136.0" text="Year: " textFill="WHITE" />
+                        <Label fx:id="moduleSubject" layoutX="24.0" layoutY="179.0" text="Module:" textFill="WHITE" />
+                        <TextField fx:id="courseYearInput" layoutX="115.0" layoutY="132.0" />
+                        <Button fx:id="courseYearSaveBtn" layoutX="74.0" layoutY="301.0" mnemonicParsing="false" onAction="#toCreateCourseYear" text="SAVE" />
+                        <ChoiceBox fx:id="courseYearNameInput" layoutX="113.0" layoutY="89.0" prefHeight="24.0" prefWidth="172.0" />
+                        <ChoiceBox fx:id="courseYearModuleInput" layoutX="115.0" layoutY="175.0" prefHeight="24.0" prefWidth="174.0" />
+                        <Button layoutX="149.0" layoutY="301.0" mnemonicParsing="false" onAction="#toClearInputs" text="CLEAR" />
+                        <Label fx:id="courseYearBranch" layoutX="26.0" layoutY="49.0" prefHeight="30.0" prefWidth="76.0" text="Branch:" textFill="WHITE" />
+                        <ChoiceBox fx:id="courseYearBranchInput" layoutX="115.0" layoutY="52.0" prefHeight="24.0" prefWidth="172.0" />
+                        <TableView fx:id="courseYearTableView" layoutX="307.0" layoutY="23.0" onMouseClicked="#getSelectedCourseYear" prefHeight="371.0" prefWidth="473.0">
+                          <columns>
+                            <TableColumn fx:id="col_createCourseYearCourse" prefWidth="205.0" text="Course" />
+                              <TableColumn fx:id="col_createCourseYearYear" prefWidth="74.0" text="Year" />
+                              <TableColumn fx:id="col_createCourseYearModule" prefWidth="193.0" text="Module" />
+                          </columns>
+                        </TableView>
+                     </children>
+                  </AnchorPane>
+              </content>
+            </Tab>
+            <Tab text="Student Payments">
+              <content>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                     <children>
+                        <Label layoutX="199.0" layoutY="42.0" text="Seach by student ID:" textFill="WHITE" />
+                        <TableView fx:id="tableViewPayments" layoutX="152.0" layoutY="127.0" onMouseClicked="#getSelectedPaymentLog" prefHeight="209.0" prefWidth="497.0">
+                          <columns>
+                            <TableColumn fx:id="col_paymentsID" prefWidth="102.0" text="Payment ID" />
+                            <TableColumn fx:id="col_paymentsStudentID" prefWidth="128.0" text="STUDENT ID" />
+                              <TableColumn fx:id="col_paymentsInstallment" prefWidth="187.0" text="PAID INSTALLMENT" />
+                              <TableColumn fx:id="col_paymentsDate" prefWidth="79.0" text="DATE" />
+                          </columns>
+                        </TableView>
+                        <Button fx:id="btnAddPayment" layoutX="344.0" layoutY="351.0" mnemonicParsing="false" onAction="#addPayments" text="ADD PAYMENT" />
+                        <Label fx:id="numberInstallmentsToAdd" layoutX="518.0" layoutY="83.0" text=" " textFill="WHITE" />
+                        <ChoiceBox fx:id="studentsInDebt" layoutX="352.0" layoutY="38.0" prefHeight="24.0" prefWidth="176.0" />
                      </children>
                   </AnchorPane>
               </content>

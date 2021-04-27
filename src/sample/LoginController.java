@@ -84,6 +84,8 @@ public class LoginController implements Initializable {
 
                 AdminMainPage adminMainPage = loader.getController();
                 adminMainPage.setAdmin(admin);
+                LoginUser loginUser = new LoginUser();
+                loginUser.setUserId(admin.getFirstName());
                 System.out.println("Admin name: " + admin.getFirstName());
                 stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 scene = new Scene(root);

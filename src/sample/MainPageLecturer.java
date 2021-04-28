@@ -10,6 +10,7 @@ import sample.queriesSQL.UsefulVariables;
 import sample.tableviewPOJO.AssigmentMaster;
 import sample.tableviewPOJO.ExamsMaster;
 import sample.tableviewPOJO.GradesMaster;
+import sample.tableviewPOJO.UserLoginPOJO;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -132,10 +133,6 @@ public class MainPageLecturer implements Initializable {
     private TableColumn<ExamsMaster, String> col_examsDate;
 
 
-//    private Lecturer lecturer = LoginUser.getInstance().getLoginUserLecturer();
-
-
-
 
 
 
@@ -143,19 +140,20 @@ public class MainPageLecturer implements Initializable {
 
     }
 
-//    private void setWelcomeMessage(){
-//        labelWelcome1.setText(lecturer.getFirstName());
-//        labelWelcome2.setText(lecturer.getFirstName());
-//        labelWelcome3.setText(lecturer.getFirstName());
-//    }
+    private void setWelcomeMessage(String message){
+        labelWelcome1.setText("Welcome " + message);
+        labelWelcome2.setText("Welcome " + message);
+        labelWelcome3.setText("Welcome " + message);
+    }
 
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        setWelcomeMessage(UserLoginPOJO.getUserFullName());
 
-        System.out.println(Lecturer.lecturer.getId());
+        System.out.println("this is: " + UserLoginPOJO.getUserID());
 
 
 //        setWelcomeMessage();

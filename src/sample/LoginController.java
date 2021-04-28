@@ -19,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import sample.tableviewPOJO.UserLoginPOJO;
 
 import java.io.IOException;
 import java.net.URL;
@@ -119,6 +120,9 @@ public class LoginController implements Initializable {
             if (student.getPassword().equals(password) && student.getId().equals(userId)) {
 
 
+                UserLoginPOJO.setUserFullName(student.getFirstName()+" "+ student.getLastName());
+                UserLoginPOJO.setUserID(student.getId());
+
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("MainPage_Student.fxml"));
                 Parent root = loader.load();
 
@@ -149,9 +153,14 @@ public class LoginController implements Initializable {
             if (lecturer.getPassword().equals(password) && lecturer.getId().equals(userId)) {
 
 
+                UserLoginPOJO.setUserID(lecturer.getId());
+                UserLoginPOJO.setUserFullName(lecturer.getFirstName() + " " + lecturer.getLastName());
+
+
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("MainPage_Lecturer.fxml"));
                 Parent root = loader.load();
                 stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+                System.setProperty("userId", lecturer.getId());
                 scene = new Scene(root);
                 stage.setScene(scene);
 

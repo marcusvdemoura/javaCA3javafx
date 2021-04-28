@@ -10,6 +10,8 @@ import sample.entities.*;
 import sample.queriesSQL.*;
 
 
+
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -35,6 +37,8 @@ public class LoginController implements Initializable {
     private Admin admin;
     private Student student;
     private Lecturer lecturer;
+    
+    private static String userId;
 
     @FXML
     private ChoiceBox<String> myChoiceBox = new ChoiceBox<>();
@@ -84,8 +88,8 @@ public class LoginController implements Initializable {
 
                 AdminMainPage adminMainPage = loader.getController();
                 adminMainPage.setAdmin(admin);
-                LoginUser loginUser = new LoginUser();
-                loginUser.setUserId(admin.getFirstName());
+
+//                LoginUser.userId = admin.getFirstName();
                 System.out.println("Admin name: " + admin.getFirstName());
                 stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
@@ -147,13 +151,10 @@ public class LoginController implements Initializable {
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("MainPage_Lecturer.fxml"));
                 Parent root = loader.load();
-
-                MainPageLecturer mainPageLecturer = loader.getController();
-                mainPageLecturer.setLecturer(lecturer);
-                System.out.println("Lecturer name: " + lecturer.getFirstName());
                 stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
                 stage.setScene(scene);
+
                 stage.show();
 
             } else {
@@ -188,5 +189,8 @@ public class LoginController implements Initializable {
     private void setLecturer(Lecturer lecturer) {
         this.lecturer = lecturer;
     }
+
+
+
 }
 

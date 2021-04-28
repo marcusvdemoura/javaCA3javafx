@@ -5,9 +5,10 @@
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -31,14 +32,21 @@
                         <Label layoutX="35.0" layoutY="73.0" text="Module" />
                         <Label layoutX="35.0" layoutY="116.0" text="Date" />
                         <Label layoutX="35.0" layoutY="159.0" text="Description" />
-                        <DatePicker fx:id="assignmentDate" layoutX="127.0" layoutY="113.0" prefHeight="26.0" prefWidth="150.0" />
-                        <TextArea fx:id="assignmentDescription" layoutX="127.0" layoutY="156.0" prefHeight="185.0" prefWidth="150.0" />
+                        <DatePicker fx:id="setAssignmentGetDate" layoutX="127.0" layoutY="113.0" prefHeight="26.0" prefWidth="150.0" />
+                        <TextArea fx:id="setAssignmentGetDescription" layoutX="127.0" layoutY="156.0" prefHeight="185.0" prefWidth="150.0" />
                         <Button fx:id="saveAssignment" layoutX="42.0" layoutY="373.0" mnemonicParsing="false" onAction="#createAssignment" text="Save" />
-                        <Button layoutX="108.0" layoutY="373.0" mnemonicParsing="false" text="Update" />
-                        <Button layoutX="179.0" layoutY="373.0" mnemonicParsing="false" text="Delete" />
-                        <Button layoutX="251.0" layoutY="373.0" mnemonicParsing="false" text="Clear" />
-                        <ListView layoutX="364.0" layoutY="64.0" prefHeight="259.0" prefWidth="399.0" />
-                        <ChoiceBox fx:id="lecturerModules" layoutX="127.0" layoutY="69.0" prefWidth="150.0" />
+                        <Button fx:id="updateAssignment" layoutX="108.0" layoutY="373.0" mnemonicParsing="false" text="Update" />
+                        <Button fx:id="deleteAssignment" layoutX="179.0" layoutY="373.0" mnemonicParsing="false" text="Delete" />
+                        <Button fx:id="clearAssignmentContent" layoutX="251.0" layoutY="373.0" mnemonicParsing="false" text="Clear" />
+                        <ChoiceBox fx:id="setAssignmentGetModule" layoutX="127.0" layoutY="69.0" prefWidth="150.0" />
+                        <Label fx:id="labelWelcome1" layoutX="34.0" layoutY="23.0" text="Label" />
+                        <TableView fx:id="tableViewAssignment" layoutX="315.0" layoutY="67.0" prefHeight="275.0" prefWidth="477.0">
+                          <columns>
+                            <TableColumn fx:id="col_assignmentModule" prefWidth="110.0" text="MODULE" />
+                            <TableColumn fx:id="col_assignmentDate" prefWidth="104.0" text="DATE" />
+                              <TableColumn fx:id="col_assignmentDescription" prefWidth="261.0" text="DESCRIPTION" />
+                          </columns>
+                        </TableView>
                      </children>
                   </AnchorPane>
             </content>
@@ -47,19 +55,24 @@
             <content>
               <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="35.0" layoutY="39.0" text="Branch" />
-                        <Label layoutX="35.0" layoutY="82.0" text="Module" />
-                        <Label layoutX="35.0" layoutY="125.0" text="Student" />
-                        <Label layoutX="35.0" layoutY="171.0" text="Grade" />
-                        <ComboBox layoutX="127.0" layoutY="36.0" prefWidth="150.0" />
-                        <ComboBox layoutX="127.0" layoutY="79.0" prefWidth="150.0" />
-                        <ComboBox layoutX="127.0" layoutY="122.0" prefWidth="150.0" />
-                        <TextField layoutX="127.0" layoutY="168.0" prefHeight="26.0" prefWidth="78.0" />
-                        <Button layoutX="42.0" layoutY="339.0" mnemonicParsing="false" text="Save" />
-                        <Button layoutX="108.0" layoutY="339.0" mnemonicParsing="false" text="Update" />
-                        <Button layoutX="179.0" layoutY="339.0" mnemonicParsing="false" text="Delete" />
-                        <Button layoutX="251.0" layoutY="339.0" mnemonicParsing="false" text="Clear" />
-                        <ListView layoutX="364.0" layoutY="64.0" prefHeight="259.0" prefWidth="399.0" />
+                        <Label layoutX="53.0" layoutY="127.0" text="Module" />
+                        <Label layoutX="53.0" layoutY="76.0" text="Student" />
+                        <Label layoutX="53.0" layoutY="175.0" text="Grade" />
+                        <ComboBox fx:id="gradesGetModule" layoutX="145.0" layoutY="124.0" prefWidth="150.0" />
+                        <ComboBox fx:id="gradesGetStudent" layoutX="145.0" layoutY="73.0" prefWidth="150.0" />
+                        <TextField fx:id="gradesGetGrade" layoutX="145.0" layoutY="172.0" prefHeight="26.0" prefWidth="78.0" />
+                        <Button fx:id="btnSaveGrade" layoutX="42.0" layoutY="339.0" mnemonicParsing="false" text="Save" />
+                        <Button fx:id="btnEditGrade" layoutX="99.0" layoutY="339.0" mnemonicParsing="false" text="Update" />
+                        <Button fx:id="btnDeleteGrade" layoutX="179.0" layoutY="339.0" mnemonicParsing="false" text="Delete" />
+                        <Button fx:id="clearGrades" layoutX="251.0" layoutY="339.0" mnemonicParsing="false" text="Clear" />
+                        <Label fx:id="labelWelcome2" layoutX="53.0" layoutY="31.0" text="Label" />
+                        <TableView fx:id="tableViewGrades" layoutX="331.0" layoutY="43.0" prefHeight="318.0" prefWidth="401.0">
+                          <columns>
+                            <TableColumn fx:id="col_gradesStudentId" prefWidth="123.0" text="StudentID" />
+                            <TableColumn fx:id="col_gradesModule" prefWidth="166.0" text="Module" />
+                              <TableColumn fx:id="col_gradesGrades" prefWidth="110.0" text="Grade" />
+                          </columns>
+                        </TableView>
                      </children>
                   </AnchorPane>
             </content>
@@ -68,17 +81,21 @@
                <content>
                   <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
                      <children>
-                        <Label layoutX="35.0" layoutY="39.0" text="Module" />
-                        <Label layoutX="35.0" layoutY="82.0" text="Lecturer" />
-                        <Label layoutX="35.0" layoutY="125.0" text="Date" />
-                        <ComboBox layoutX="127.0" layoutY="36.0" prefWidth="150.0" />
-                        <ComboBox layoutX="127.0" layoutY="79.0" prefWidth="150.0" />
-                        <DatePicker layoutX="127.0" layoutY="122.0" prefHeight="26.0" prefWidth="150.0" />
-                        <Button layoutX="42.0" layoutY="339.0" mnemonicParsing="false" text="Save" />
-                        <Button layoutX="108.0" layoutY="339.0" mnemonicParsing="false" text="Update" />
-                        <Button layoutX="179.0" layoutY="339.0" mnemonicParsing="false" text="Delete" />
-                        <Button layoutX="251.0" layoutY="339.0" mnemonicParsing="false" text="Clear" />
-                        <ListView layoutX="364.0" layoutY="64.0" prefHeight="259.0" prefWidth="399.0" />
+                        <Label layoutX="42.0" layoutY="104.0" text="Module" />
+                        <Label layoutX="42.0" layoutY="159.0" text="Date" />
+                        <ComboBox fx:id="examsModule" layoutX="134.0" layoutY="101.0" prefWidth="150.0" />
+                        <DatePicker fx:id="examsDate" layoutX="134.0" layoutY="156.0" prefHeight="26.0" prefWidth="150.0" />
+                        <Button fx:id="examsSave" layoutX="42.0" layoutY="339.0" mnemonicParsing="false" text="Save" />
+                        <Button fx:id="examsUpdate" layoutX="108.0" layoutY="339.0" mnemonicParsing="false" text="Update" />
+                        <Button fx:id="examsDelete" layoutX="179.0" layoutY="339.0" mnemonicParsing="false" text="Delete" />
+                        <Button fx:id="examsClear" layoutX="251.0" layoutY="339.0" mnemonicParsing="false" text="Clear" />
+                        <Label fx:id="labelWelcome3" layoutX="40.0" layoutY="30.0" text="Label" />
+                        <TableView fx:id="tableViewExams" layoutX="412.0" layoutY="43.0" prefHeight="320.0" prefWidth="291.0">
+                          <columns>
+                            <TableColumn fx:id="col_examsModule" prefWidth="164.0" text="Module" />
+                            <TableColumn fx:id="col_examsDate" prefWidth="125.0" text="Date" />
+                          </columns>
+                        </TableView>
                      </children>
                   </AnchorPane>
                </content>

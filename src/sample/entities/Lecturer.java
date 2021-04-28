@@ -13,6 +13,8 @@ public class Lecturer extends Person implements LecturerTools {
     private UsefulVariables usefulVariables = new UsefulVariables();
     private Connection con = DriverManager.getConnection(usefulVariables.URL, usefulVariables.DB_USER, usefulVariables.DB_PASSWORD);
 
+    public static Lecturer lecturer;
+
 
 
     public Lecturer(String first_name, String last_name, String gender, String phone, String dob, String emailAddress,
@@ -66,7 +68,7 @@ public class Lecturer extends Person implements LecturerTools {
 
     }
 
-    // CREATING and EDITING EXAMS
+
 
     @Override
     public void createExam(String date) {

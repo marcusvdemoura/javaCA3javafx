@@ -1,29 +1,28 @@
 package sample;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import sample.entities.Lecturer;
 import sample.queriesSQL.UsefulVariables;
+import sample.tableviewPOJO.AssigmentMaster;
+import sample.tableviewPOJO.ExamsMaster;
+import sample.tableviewPOJO.GradesMaster;
 
-import javax.swing.*;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.ResourceBundle;
+
 
 public class MainPageLecturer implements Initializable {
 
 
-    private Lecturer lecturer;
-    private Lecturer myLecturer;
+
     private UsefulVariables usefulVariables = new UsefulVariables();
     private Connection con = DriverManager.getConnection(usefulVariables.URL, usefulVariables.DB_USER, usefulVariables.DB_PASSWORD);
 
@@ -31,67 +30,170 @@ public class MainPageLecturer implements Initializable {
     private Label welcomeMessage;
 
     @FXML
-    private ChoiceBox<String> lecturerModules;
+    private DatePicker setAssignmentGetDate;
 
     @FXML
-    private DatePicker assignmentDate;
+    private TextArea setAssignmentGetDescription;
 
     @FXML
-    private TextArea assignmentDescription;
+    private Button saveAssignment;
+
+    @FXML
+    private Button updateAssignment;
+
+    @FXML
+    private Button deleteAssignment;
+
+    @FXML
+    private Button clearAssignmentContent;
+
+    @FXML
+    private ChoiceBox<String> setAssignmentGetModule;
+
+    @FXML
+    private Label labelWelcome1;
+
+    @FXML
+    private TableView<AssigmentMaster> tableViewAssignment;
+
+    @FXML
+    private TableColumn<AssigmentMaster, String> col_assignmentModule;
+
+    @FXML
+    private TableColumn<AssigmentMaster, String> col_assignmentDate;
+
+    @FXML
+    private TableColumn<AssigmentMaster, String> col_assignmentDescription;
+
+    @FXML
+    private ComboBox<String> gradesGetModule;
+
+    @FXML
+    private ComboBox<String> gradesGetStudent;
+
+    @FXML
+    private TextField gradesGetGrade;
+
+    @FXML
+    private Button btnSaveGrade;
+
+    @FXML
+    private Button btnEditGrade;
+
+    @FXML
+    private Button btnDeleteGrade;
+
+    @FXML
+    private Button clearGrades;
+
+    @FXML
+    private Label labelWelcome2;
+
+    @FXML
+    private TableView<GradesMaster> tableViewGrades;
+
+    @FXML
+    private TableColumn<GradesMaster, String> col_gradesStudentId;
+
+    @FXML
+    private TableColumn<GradesMaster, String> col_gradesModule;
+
+    @FXML
+    private TableColumn<GradesMaster, Double> col_gradesGrades;
+
+    @FXML
+    private ComboBox<String> examsModule;
+
+    @FXML
+    private DatePicker examsDate;
+
+    @FXML
+    private Button examsSave;
+
+    @FXML
+    private Button examsUpdate;
+
+    @FXML
+    private Button examsDelete;
+
+    @FXML
+    private Button examsClear;
+
+    @FXML
+    private Label labelWelcome3;
+
+    @FXML
+    private TableView<ExamsMaster> tableViewExams;
+
+    @FXML
+    private TableColumn<ExamsMaster, String> col_examsModule;
+
+    @FXML
+    private TableColumn<ExamsMaster, String> col_examsDate;
+
+
+//    private Lecturer lecturer = LoginUser.getInstance().getLoginUserLecturer();
+
+
+
+
+
 
     public MainPageLecturer() throws SQLException, ClassNotFoundException {
 
-//        getModules();
-
     }
+
+//    private void setWelcomeMessage(){
+//        labelWelcome1.setText(lecturer.getFirstName());
+//        labelWelcome2.setText(lecturer.getFirstName());
+//        labelWelcome3.setText(lecturer.getFirstName());
+//    }
+
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+
+        System.out.println(Lecturer.lecturer.getId());
+
+
+//        setWelcomeMessage();
+
+
+
     }
+
+
+
+
+
+
+//    @FXML
+//    private ArrayList<String> getModules() throws ClassNotFoundException, SQLException {
+//        Class.forName("com.mysql.jdbc.Driver");
+//
+//
+//        String sql = "select * from module WHERE idlecturer = ?";
+//        usefulVariables.getModules = con.prepareStatement(sql);
+//        usefulVariables.getModules.setString(1, getLecturer().getId());
+//        ResultSet resultBranches = usefulVariables.getModules.executeQuery();
+//
+//        ArrayList<String> allModules = new ArrayList<>();
+//
+//        while (resultBranches.next()) {
+//            allModules.add(resultBranches.getString("subject"));
+//        }
+//
+//        lecturerModules.getItems().addAll(getModules());
+//
+//        return allModules;
+//    }
+
 
     @FXML
-    private ArrayList<String> getModules() throws ClassNotFoundException, SQLException {
-        Class.forName("com.mysql.jdbc.Driver");
-
-
-        String sql = "select * from module WHERE idlecturer = ?";
-        usefulVariables.getModules = con.prepareStatement(sql);
-        usefulVariables.getModules.setString(1, getLecturer().getId());
-        ResultSet resultBranches = usefulVariables.getModules.executeQuery();
-
-        ArrayList<String> allModules = new ArrayList<>();
-
-        while (resultBranches.next()) {
-            allModules.add(resultBranches.getString("subject"));
-        }
-
-        lecturerModules.getItems().addAll(getModules());
-
-        return allModules;
-    }
-
-
-    @FXML
-    private void createAssignment() throws SQLException, ClassNotFoundException {
-
-        lecturer.createAssignment(assignmentDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), assignmentDescription.getText(),
-        getLecturer().getId(), lecturerModules.getValue());
-
-
+    void createAssignment(ActionEvent event) {
 
     }
 
-
-    public Lecturer getLecturer() {
-        return lecturer;
-    }
-
-    public void setLecturer(Lecturer lecturer) throws SQLException, ClassNotFoundException {
-        this.lecturer = lecturer;
-        myLecturer = lecturer;
-        welcomeMessage.setText("Welcome " + getLecturer().getFirstName() +  " " + getLecturer().getLastName());
-
-    }
 }

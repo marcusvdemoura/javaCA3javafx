@@ -8,10 +8,18 @@ import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Lecturer extends Person implements LecturerTools {
+public class Lecturer extends Person{
 
-    private UsefulVariables usefulVariables = new UsefulVariables();
-    private Connection con = DriverManager.getConnection(usefulVariables.URL, usefulVariables.DB_USER, usefulVariables.DB_PASSWORD);
+//    private UsefulVariables usefulVariables = new UsefulVariables();
+    private static Connection con;
+
+    static {
+        try {
+            con = DriverManager.getConnection(UsefulVariables.URL, UsefulVariables.DB_USER, UsefulVariables.DB_PASSWORD);
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
 
     public static Lecturer lecturer;
 
@@ -24,59 +32,107 @@ public class Lecturer extends Person implements LecturerTools {
     }
 
 
-    @Override
-    public void setGrade(Double grade, Student s) throws Exception {
+    public static void setGrade(String studentid, String modulename, Double grade, String lecturerid) throws Exception {
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "INSERT INTO gradesModule (studentid, modulename, grade, lecturerid) VALUES (?,?,?,?)";
+
+        UsefulVariables.addGrade = con.prepareStatement(sql);
+
+        UsefulVariables.addGrade.setString(1, studentid);
+        UsefulVariables.addGrade.setString(2, modulename);
+        UsefulVariables.addGrade.setDouble(3, grade);
+        UsefulVariables.addGrade.setString(4, lecturerid);
+
+
+
+        UsefulVariables.addGrade.execute();
 
 
     }
 
-    @Override
-    public void createAssignment(String dueDate, String description, String moduleSubject, String lecturerId) throws ClassNotFoundException, SQLException {
+    public static void editGrade(Integer id, Double grade) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "UPDATE grade SET grade = ? WHERE gradeid = ?";
+
+        UsefulVariables.editAssignment = con.prepareStatement(sql);
+
+        UsefulVariables.editAssignment.setDouble(1, grade);
+        UsefulVariables.editAssignment.setInt(2, id);
+
+
+
+        UsefulVariables.editAssignment.execute();
+    }
+
+
+
+    public static void createAssignment(String dueDate, String description, String moduleSubject, String lecturerId) throws ClassNotFoundException, SQLException {
 
 
         Class.forName("com.mysql.jdbc.Driver");
 
         String sql = "INSERT INTO assignment (dueDate, description, lecturerId, moduleSubject) VALUES (?,?,?,?)";
 
-        usefulVariables.createAssignmentQuery = con.prepareStatement(sql);
+        UsefulVariables.createAssignmentQuery = con.prepareStatement(sql);
 
-        usefulVariables.createAssignmentQuery.setString(1, dueDate);
-        usefulVariables.createAssignmentQuery.setString(2, description);
-        usefulVariables.createAssignmentQuery.setString(3, lecturerId);
-        usefulVariables.createAssignmentQuery.setString(4, moduleSubject);
-
-
-        usefulVariables.createAssignmentQuery.execute();
+        UsefulVariables.createAssignmentQuery.setString(1, dueDate);
+        UsefulVariables.createAssignmentQuery.setString(2, description);
+        UsefulVariables.createAssignmentQuery.setString(3, lecturerId);
+        UsefulVariables.createAssignmentQuery.setString(4, moduleSubject);
 
 
-    }
-
-    @Override
-    public void deleteAssignment(Assignment assignment) {
+        UsefulVariables.createAssignmentQuery.execute();
 
 
     }
 
-    @Override
-    public void editAssignment(Assignment assignment, String dueDate, String description) {
+    public static void deleteAssignment(Integer id) throws ClassNotFoundException, SQLException {
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "DELETE from assignment WHERE idassignment = '" + id + "'";
+
+        UsefulVariables.deleteAssignment = con.prepareStatement(sql);
+
+
+        UsefulVariables.deleteAssignment.execute();
 
 
     }
 
-    @Override
+    public static void editAssignment(Integer id, String dueDate, String description, String moduleSubject) throws ClassNotFoundException, SQLException {
+
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "UPDATE assignment SET dueDate = ?, description = ?, moduleSubject = ? WHERE idassignment = ?";
+
+        UsefulVariables.editAssignment = con.prepareStatement(sql);
+
+        UsefulVariables.editAssignment.setString(1, dueDate);
+        UsefulVariables.editAssignment.setString(2, description);
+        UsefulVariables.editAssignment.setString(3, moduleSubject);
+        UsefulVariables.editAssignment.setInt(4, id);
+
+
+        UsefulVariables.editAssignment.execute();
+
+    }
+
     public void getStudentGrade(Student student) {
 
     }
 
 
 
-    @Override
     public void createExam(String date) {
 
 
     }
 
-    @Override
     public void editExam(Exam e, String date) {
 
 

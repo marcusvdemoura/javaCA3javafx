@@ -10,47 +10,51 @@ public class UsefulVariables {
     public final static String DB_USER = "root";
     public final static String DB_PASSWORD = "M@rcus2020";
 
-    public PreparedStatement createBranchQuery;
-    public PreparedStatement deleteBranchQuery;
-    public PreparedStatement createStudentQuery;
-    public PreparedStatement deleteStudentQuery;
-    public PreparedStatement createLecturerQuery;
-    public PreparedStatement deleteLecturerQuery;
-    public PreparedStatement createAdminQuery;
-    public PreparedStatement createModuleQuery;
-    public PreparedStatement deleteModuleQuery;
-    public PreparedStatement createCourseQuery;
-    public PreparedStatement deleteCourseQuery;
-    public PreparedStatement addStudentModuleQuery;
-    public PreparedStatement createAssignmentQuery;
+    public static PreparedStatement createBranchQuery;
+
+    public static PreparedStatement createAssignmentQuery;
 
 
 
-    public PreparedStatement getBranches;
+    public static PreparedStatement getBranches;
 
-    public PreparedStatement getCourses;
+    public static PreparedStatement getCourses;
 
-    public PreparedStatement getLecturersId;
+    public static PreparedStatement getLecturersId;
 
-    public PreparedStatement getModules;
+    public static PreparedStatement getModules;
 
-    public PreparedStatement createModuleGetCourses;
+    public static PreparedStatement createModuleGetCourses;
 
-    public PreparedStatement getAllStudents;
+    public static PreparedStatement getAllStudents;
 
-    public PreparedStatement getAllLecturers;
+    public static PreparedStatement getAllLecturers;
 
-    public PreparedStatement getAllCourses;
+    public static PreparedStatement getAllCourses;
 
-    public PreparedStatement getAllBranches;
+    public static PreparedStatement getAllBranches;
 
-    public PreparedStatement getAllModules;
+    public static PreparedStatement getAllModules;
 
-    public PreparedStatement getAllCourseYear;
+    public static PreparedStatement getAllCourseYear;
 
-    public PreparedStatement getPayments;
+    public static PreparedStatement getPayments;
 
-    public PreparedStatement addPaymentQuery;
+    public static PreparedStatement addPaymentQuery;
+
+
+    public static PreparedStatement getAllAssignments;
+
+    public static PreparedStatement getSelectedAssignment;
+
+    public static PreparedStatement editAssignment;
+
+    public static PreparedStatement deleteAssignment;
+
+    public static PreparedStatement addGrade;
+
+
+
 
 
 

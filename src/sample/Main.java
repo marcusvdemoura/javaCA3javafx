@@ -13,7 +13,7 @@ public class Main extends Application {
 
         Parent root = FXMLLoader.load(getClass().getResource("LoginPage.fxml"));
         Scene scene = new Scene(root, 800, 533);
-        primaryStage.setTitle("Login");
+        primaryStage.setTitle("VIRTUAL GLOBE COLLEGE ");
         primaryStage.setScene(scene);
         primaryStage.setResizable(false);
         primaryStage.show();

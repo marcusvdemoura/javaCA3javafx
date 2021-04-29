@@ -52,15 +52,16 @@ public class Lecturer extends Person{
 
     }
 
-    public static void editGrade(Integer id, Double grade) throws ClassNotFoundException, SQLException {
+    public static void editGrade(Integer id, Double grade, String module) throws ClassNotFoundException, SQLException {
         Class.forName("com.mysql.jdbc.Driver");
 
-        String sql = "UPDATE grade SET grade = ? WHERE gradeid = ?";
+        String sql = "UPDATE gradesModule SET grade = ?, modulename = ? WHERE gradeid = ?";
 
         UsefulVariables.editAssignment = con.prepareStatement(sql);
 
         UsefulVariables.editAssignment.setDouble(1, grade);
-        UsefulVariables.editAssignment.setInt(2, id);
+        UsefulVariables.editAssignment.setString(2, module);
+        UsefulVariables.editAssignment.setInt(3, id);
 
 
 
@@ -122,20 +123,54 @@ public class Lecturer extends Person{
 
     }
 
-    public void getStudentGrade(Student student) {
+
+
+    public static void createExam(String date, String module, String lecturerid) throws ClassNotFoundException, SQLException {
+
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "INSERT INTO exam (date, lecturerId, module) VALUES (?,?,?)";
+
+        UsefulVariables.createExam = con.prepareStatement(sql);
+
+        UsefulVariables.createExam.setString(1, date);
+        UsefulVariables.createExam.setString(2, lecturerid);
+        UsefulVariables.createExam.setString(3, module);
+
+
+
+        UsefulVariables.createExam.execute();
+
 
     }
 
+    public static void editExam(String date, String module, Integer id) throws ClassNotFoundException, SQLException {
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "UPDATE exam SET date = ?, module = ? WHERE idexam = ?";
+
+        UsefulVariables.editExam = con.prepareStatement(sql);
+
+        UsefulVariables.editExam.setString(1, date);
+        UsefulVariables.editExam.setString(2, module);
+        UsefulVariables.editExam.setInt(4, id);
 
 
-    public void createExam(String date) {
-
+        UsefulVariables.editExam.execute();
 
     }
 
-    public void editExam(Exam e, String date) {
+    public static void deleteExam(Integer id) throws ClassNotFoundException, SQLException {
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "DELETE from exam WHERE idexam = '" + id + "'";
+
+        UsefulVariables.deleteExam = con.prepareStatement(sql);
 
 
+        UsefulVariables.deleteExam.execute();
     }
 
 }

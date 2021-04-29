@@ -122,13 +122,11 @@ public class LoginController implements Initializable {
 
                 UserLoginPOJO.setUserFullName(student.getFirstName()+" "+ student.getLastName());
                 UserLoginPOJO.setUserID(student.getId());
+                UserLoginPOJO.setStudentYear(Integer.parseInt(student.getCourseYear()));
+                UserLoginPOJO.setStudentCourse(student.getCourseName());
 
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("MainPage_Student.fxml"));
                 Parent root = loader.load();
-
-                MainPageStudent mainPageStudent = loader.getController();
-                mainPageStudent.setStudent(student);
-                System.out.println("Student name: " + student.getFirstName());
                 stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 scene = new Scene(root);
                 stage.setScene(scene);

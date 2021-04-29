@@ -16,16 +16,24 @@ public class Student extends Person{
     private ArrayList<Exam> listOfExams = new ArrayList<>();
     private String courseYear;
 
+    private String courseName;
+    private String collegeBranchUnit;
+
 
 
 
     public Student(String firstName, String lastName, String gender, String phone, String dob,
-                   String emailAddress, String id, String password, String collegeBranchName,
+                   String emailAddress, String id, String password, String collegeBranchUnit,
                    String courseName, boolean isPaidFull, String courseYear) {
         super(firstName, lastName, gender, phone, dob, emailAddress, id, password);
-        this.collegeBranch = collegeBranch;
+        this.collegeBranchUnit = collegeBranchUnit;
         this.isPaidFull = isPaidFull;
         this.courseYear = courseYear;
+        this.courseName = courseName;
+    }
+
+    public String getCourseName() {
+        return courseName;
     }
 
     public ArrayList<Assignment> getListOfAssignments() {

@@ -53,6 +53,18 @@ public class UsefulVariables {
 
     public static PreparedStatement addGrade;
 
+    public static PreparedStatement getSelectedGrade;
+
+    public static PreparedStatement getAllGrades;
+
+    public static PreparedStatement createExam;
+
+    public static PreparedStatement editExam;
+
+    public static PreparedStatement deleteExam;
+
+    public static PreparedStatement getSelectedExam;
+
 
 
 

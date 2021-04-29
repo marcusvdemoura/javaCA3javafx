@@ -69,10 +69,10 @@ public class MainPageLecturer implements Initializable {
     private TableColumn<AssigmentMaster, String> col_assignmentDescription;
 
     @FXML
-    private ComboBox<String> gradesGetModule;
+    private ChoiceBox<String> gradesGetModule;
 
     @FXML
-    private ComboBox<String> gradesGetStudent;
+    private ChoiceBox<String> gradesGetStudent;
 
     @FXML
     private TextField gradesGetGrade;
@@ -93,7 +93,7 @@ public class MainPageLecturer implements Initializable {
     private TableView<GradesMaster> tableViewGrades;
 
     @FXML
-    private TableColumn<GradesMaster, String> col_gradesId;
+    private TableColumn<GradesMaster, Integer> col_gradesId;
 
     @FXML
     private TableColumn<GradesMaster, String> col_gradesStudentId;
@@ -105,7 +105,7 @@ public class MainPageLecturer implements Initializable {
     private TableColumn<GradesMaster, Double> col_gradesGrades;
 
     @FXML
-    private ComboBox<String> examsModule;
+    private ChoiceBox<String> examsModule;
 
     @FXML
     private DatePicker examsDate;
@@ -127,6 +127,9 @@ public class MainPageLecturer implements Initializable {
 
     @FXML
     private TableView<ExamsMaster> tableViewExams;
+
+    @FXML
+    private TableColumn<ExamsMaster, Integer> col_examsId;
 
     @FXML
     private TableColumn<ExamsMaster, String> col_examsModule;
@@ -154,6 +157,7 @@ public class MainPageLecturer implements Initializable {
         try {
             setAssignmentGetModule.getItems().addAll(getModules());
             gradesGetModule.getItems().addAll(getModules());
+            examsModule.getItems().addAll(getModules());
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (SQLException throwables) {
@@ -163,7 +167,9 @@ public class MainPageLecturer implements Initializable {
 
         refreshAssignmentList();
 
+        refreshGradeList();
 
+        refreshExamsList();
 
 
         gradesGetModule.valueProperty().addListener((obs, oldValue, newValue) -> {
@@ -171,7 +177,6 @@ public class MainPageLecturer implements Initializable {
                 gradesGetStudent.getItems().clear();
                 gradesGetStudent.setDisable(true);
             } else {
-                // sample code, adapt as needed:
                 List<String> list = null;
                 try {
                     list = getStudents(gradesGetModule.getValue());
@@ -268,7 +273,6 @@ public class MainPageLecturer implements Initializable {
     }
 
 
-
     public void getSelectedAssignment(javafx.scene.input.MouseEvent mouseEvent) throws ClassNotFoundException, SQLException, ParseException {
 
         int indexAssignments = -1;
@@ -349,8 +353,6 @@ public class MainPageLecturer implements Initializable {
         toClear();
 
 
-
-
     }
 
     @FXML
@@ -380,11 +382,7 @@ public class MainPageLecturer implements Initializable {
     }
 
 
-
     // TAB GRADES
-
-
-
 
 
     @FXML
@@ -402,40 +400,320 @@ public class MainPageLecturer implements Initializable {
         alert.setHeaderText("Grade added for Student");
         alert.show();
 
-        refreshAssignmentList();
+        refreshGradeList();
 
         toClear();
     }
 
 
+    private ObservableList<GradesMaster> getGradesList() throws ClassNotFoundException, SQLException {
 
 
+        ObservableList<GradesMaster> list = FXCollections.observableArrayList();
+
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "Select * from gradesModule WHERE lecturerid = ?";
+
+        UsefulVariables.getAllGrades = con.prepareStatement(sql);
+        UsefulVariables.getAllGrades.setString(1, UserLoginPOJO.getUserID());
+        ResultSet result = UsefulVariables.getAllGrades.executeQuery();
+
+        while (result.next()) {
+
+            GradesMaster gradesMaster = new GradesMaster();
+            gradesMaster.setId(result.getInt("gradeid"));
+            gradesMaster.setStudentid(result.getString("studentid"));
+            gradesMaster.setModule(result.getString("modulename"));
+            gradesMaster.setGrade(result.getDouble("grade"));
+
+
+            list.add(gradesMaster);
+
+
+        }
+
+
+        return list;
+
+
+    }
+
+
+    public void getSelectedGrade(javafx.scene.input.MouseEvent mouseEvent) throws ClassNotFoundException, SQLException, ParseException {
+
+        int indexGrades = -1;
+
+        indexGrades = tableViewGrades.getSelectionModel().getSelectedIndex();
+        if (indexGrades <= -1) {
+            return;
+        }
+
+        int gradesId = col_gradesId.getCellData(indexGrades);
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        System.out.println(gradesId);
+
+
+        String sql = "select * from gradesModule WHERE gradeid = ?";
+        usefulVariables.getSelectedGrade = con.prepareStatement(sql);
+        usefulVariables.getSelectedGrade.setInt(1, gradesId);
+        ResultSet resultGetSelectedGrade = usefulVariables.getSelectedGrade.executeQuery();
+
+
+        while (resultGetSelectedGrade.next()) {
+            gradesGetModule.setValue(resultGetSelectedGrade.getString("modulename"));
+            gradesGetStudent.setValue(resultGetSelectedGrade.getString("studentid"));
+            gradesGetGrade.setText(resultGetSelectedGrade.getString("grade"));
+
+
+        }
+
+
+    }
+
+    private void refreshGradeList() {
+
+        col_gradesId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        col_gradesStudentId.setCellValueFactory(new PropertyValueFactory<>("studentid"));
+        col_gradesModule.setCellValueFactory(new PropertyValueFactory<>("module"));
+        col_gradesGrades.setCellValueFactory(new PropertyValueFactory<>("grade"));
+
+
+        try {
+            tableViewGrades.getItems().setAll(getGradesList());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+
+    @FXML
+    void editGrades(ActionEvent event) throws Exception {
+
+
+        gradesGetStudent.valueProperty().addListener((e) -> {
+            gradesGetStudent.setDisable(true);
+        });
+
+        String module = gradesGetModule.getValue();
+
+        Double grade = Double.parseDouble(gradesGetGrade.getText());
+
+
+        int indexGrades = -1;
+
+        indexGrades = tableViewGrades.getSelectionModel().getSelectedIndex();
+        if (indexGrades <= -1) {
+            return;
+        }
+
+
+        int gradesId = col_gradesId.getCellData(indexGrades);
+
+
+        Lecturer.editGrade(gradesId, grade, module);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("");
+        alert.setHeaderText("Grade edited for Student");
+        alert.show();
+
+        refreshGradeList();
+
+
+        toClear();
+
+
+    }
 
 
     // TAB EXAMS
 
 
+    @FXML
+    void createExams(ActionEvent event) throws Exception {
+
+        String getModule = examsModule.getValue();
+        String lecturerid = UserLoginPOJO.getUserID();
+        String examDate = examsDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+
+        Lecturer.createExam(examDate, getModule, lecturerid);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("");
+        alert.setHeaderText("Exam created");
+        alert.show();
+
+        refreshExamsList();
+
+        toClear();
+    }
+
+    @FXML
+    void editExam(ActionEvent event) throws Exception {
+
+        String getModule = examsModule.getValue();
+        String examDate = examsDate.getValue().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        int indexExam = -1;
+
+        indexExam = tableViewGrades.getSelectionModel().getSelectedIndex();
+        if (indexExam <= -1) {
+            return;
+        }
+
+        int examsId = col_examsId.getCellData(indexExam);
 
 
+        Lecturer.editExam(examDate, getModule, examsId);
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("");
+        alert.setHeaderText("Exam edited");
+        alert.show();
+
+        refreshExamsList();
+
+    }
+
+    @FXML
+    void deleteExam(ActionEvent event) throws Exception {
+
+        int indexExam = -1;
+
+        indexExam = tableViewGrades.getSelectionModel().getSelectedIndex();
+        if (indexExam <= -1) {
+            return;
+        }
+
+        int examsId = col_examsId.getCellData(indexExam);
+
+        Lecturer.deleteExam(examsId);
+
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("");
+        alert.setHeaderText("Exam deleted");
+        alert.show();
+
+        refreshExamsList();
+
+
+
+    }
+
+
+    private ObservableList<ExamsMaster> getExamsList() throws ClassNotFoundException, SQLException {
+
+
+        ObservableList<ExamsMaster> list = FXCollections.observableArrayList();
+
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+        String sql = "Select * from exam WHERE lecturerId = ?";
+
+        UsefulVariables.getSelectedExam = con.prepareStatement(sql);
+        UsefulVariables.getSelectedExam.setString(1, UserLoginPOJO.getUserID());
+        ResultSet result = UsefulVariables.getSelectedExam.executeQuery();
+
+        while (result.next()) {
+
+            ExamsMaster examsMaster = new ExamsMaster();
+            examsMaster.setId(result.getInt("idexam"));
+            examsMaster.setModule(result.getString("module"));
+            examsMaster.setDate(result.getString("date"));
+
+
+            list.add(examsMaster);
+
+
+        }
+
+
+        return list;
+
+
+    }
+
+
+    public void getSelectedExam(javafx.scene.input.MouseEvent mouseEvent) throws ClassNotFoundException, SQLException, ParseException {
+
+        int indexExam = -1;
+
+        indexExam = tableViewExams.getSelectionModel().getSelectedIndex();
+        if (indexExam <= -1) {
+            return;
+        }
+
+        int examsId = col_examsId.getCellData(indexExam);
+
+        Class.forName("com.mysql.jdbc.Driver");
+
+
+
+        String sql = "select * from exam WHERE idexam = ?";
+        usefulVariables.getSelectedExam = con.prepareStatement(sql);
+        usefulVariables.getSelectedExam.setInt(1, examsId);
+        ResultSet resultGetExam = usefulVariables.getSelectedExam.executeQuery();
+
+
+        while (resultGetExam.next()) {
+            examsModule.setValue(resultGetExam.getString("module"));
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+            LocalDate localDate = LocalDate.parse(resultGetExam.getString("date"), formatter);
+            examsDate.setValue(localDate);
+
+        }
+
+
+    }
+
+    private void refreshExamsList() {
+
+        col_examsId.setCellValueFactory(new PropertyValueFactory<>("id"));
+        col_examsModule.setCellValueFactory(new PropertyValueFactory<>("module"));
+        col_examsDate.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+
+        try {
+            tableViewExams.getItems().setAll(getExamsList());
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+
+    }
+
+
+
+
+    // ------------------------------------ general methods --------------------------------------
 
 
     @FXML
-    private void toClear(){
+    private void toClear() {
 
         setAssignmentGetModule.getSelectionModel().clearSelection();
         setAssignmentGetDate.getEditor().clear();
         setAssignmentGetDescription.clear();
 
-//        gradesGetStudent.getSelectionModel().clearSelection();
-//        gradesGetModule.getSelectionModel().clearSelection();
-//        gradesGetGrade.clear();
-//
-//        examsModule.getSelectionModel().clearSelection();
-//        examsDate.getEditor().clear();
+
+        gradesGetModule.getSelectionModel().clearSelection();
+        gradesGetStudent.getSelectionModel().clearSelection();
+        gradesGetGrade.clear();
+
+
+        examsModule.getSelectionModel().clearSelection();
+        examsDate.getEditor().clear();
 
     }
-
-
 
 
     private ArrayList<String> getStudents(String moduleName) throws ClassNotFoundException, SQLException {
@@ -464,11 +742,11 @@ public class MainPageLecturer implements Initializable {
 
         String sql2 = "SELECT idstudent FROM student WHERE course = ? AND courseYear = ?";
         PreparedStatement getListStudents = con.prepareStatement(sql2);
-        getListStudents.setString(1,course);
+        getListStudents.setString(1, course);
         getListStudents.setInt(2, year);
         ResultSet secondResult = getListStudents.executeQuery();
 
-        while(secondResult.next()){
+        while (secondResult.next()) {
             allStudents.add(secondResult.getString("idstudent"));
         }
 
@@ -477,11 +755,6 @@ public class MainPageLecturer implements Initializable {
 
 
     }
-
-
-
-
-
 
 
 }
